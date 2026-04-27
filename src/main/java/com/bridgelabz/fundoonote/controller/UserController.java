@@ -3,6 +3,7 @@ package com.bridgelabz.fundoonote.controller;
 import com.bridgelabz.fundoonote.dto.LoginDTO;
 import com.bridgelabz.fundoonote.dto.UserRegistrationDTO;
 import com.bridgelabz.fundoonote.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
