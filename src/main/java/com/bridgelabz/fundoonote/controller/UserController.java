@@ -1,8 +1,8 @@
 package com.bridgelabz.fundoonote.controller;
 
+import com.bridgelabz.fundoonote.dto.LoginDTO;
 import com.bridgelabz.fundoonote.dto.UserRegistrationDTO;
 import com.bridgelabz.fundoonote.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public String registerUser(@Valid @RequestBody UserRegistrationDTO dto) {
+    public String register(@RequestBody UserRegistrationDTO dto) {
         return userService.register(dto);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginDTO dto) {
+        return userService.login(dto);
     }
 }
