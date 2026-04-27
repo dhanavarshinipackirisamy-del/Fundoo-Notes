@@ -1,27 +1,12 @@
 package com.bridgelabz.fundoonote.dto;
-
 public class LoginDTO {
 
     private String email;
     private String password;
 
-    // Getter for email
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    // Setter for email
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    // Getter for password
-    public String getPassword() {
-        return password;
-    }
-
-    // Setter for password
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
