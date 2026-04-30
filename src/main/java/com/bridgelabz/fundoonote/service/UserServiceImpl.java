@@ -5,7 +5,7 @@ import com.bridgelabz.fundoonote.dto.UserRegistrationDTO;
 import com.bridgelabz.fundoonote.entity.User;// ✅ IMPORTANT
 import com.bridgelabz.fundoonote.repository.UserRepository;
 import com.bridgelabz.fundoonote.service.UserService;
-import com.bridgelabz.fundoonote.util.JwtUtil;
+import com.bridgelabz.fundoonote.config.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,6 @@
 package com.bridgelabz.fundoonote.repository;
 
-
-import com.bridgelabz.fundoonote.entity.User; // ✅ MUST be this
+import com.bridgelabz.fundoonote.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
