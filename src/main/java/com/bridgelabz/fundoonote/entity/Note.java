@@ -23,4 +23,7 @@ public class Note {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    private boolean pinned = false;
+    private boolean archived = false;
+    private boolean trashed = false;
 }
