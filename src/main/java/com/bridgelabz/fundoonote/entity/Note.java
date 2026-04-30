@@ -1,14 +1,15 @@
 package com.bridgelabz.fundoonote.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "notes") // 👈 IMPORTANT
+@Table(name = "notes")
 @Getter
 @Setter
+@JsonIgnoreProperties({"user"})  // 🔥 IMPORTANT FIX
 public class Note {
 
     @Id
@@ -20,7 +21,6 @@ public class Note {
     private String content;
 
     @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id") // 👈 IMPORTANT
+    @JoinColumn(name = "user_id")
     private User user;
 }

@@ -18,35 +18,49 @@ public class NoteController {
     private final NoteRepository noteRepository;
     private final UserRepository userRepository;
 
-    // CREATE NOTE
+    // ✅ CREATE NOTE (NO 500)
     @PostMapping
-    public Note create(@RequestBody Note note,
-                       Authentication auth) {
+    public Note create(@RequestBody Note note, Authentication auth) {
+
+        if (auth == null) {
+            throw new RuntimeException("Unauthorized: No authentication");
+        }
 
         String email = auth.getName();
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
         note.setUser(user);
 
         return noteRepository.save(note);
     }
 
+    // ✅ GET NOTES (UC9)
     @GetMapping
     public List<Note> get(Authentication auth) {
 
-        String email = auth.getName(); // ✅ works now
+        if (auth == null) {
+            throw new RuntimeException("Unauthorized: No authentication");
+        }
+
+        String email = auth.getName();
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
         return noteRepository.findByUser(user);
     }
+
+    // ✅ UPDATE NOTE
     @PutMapping("/{id}")
     public Note update(@PathVariable Long id,
                        @RequestBody Note updatedNote,
                        Authentication auth) {
+
+        if (auth == null) {
+            throw new RuntimeException("Unauthorized");
+        }
 
         String email = auth.getName();
 
@@ -56,9 +70,8 @@ public class NoteController {
         Note note = noteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Note not found"));
 
-        // 🔐 SECURITY CHECK
         if (!note.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Unauthorized");
+            throw new RuntimeException("Unauthorized access to note");
         }
 
         note.setTitle(updatedNote.getTitle());
@@ -66,9 +79,14 @@ public class NoteController {
 
         return noteRepository.save(note);
     }
+
+    // ✅ DELETE NOTE
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id,
-                         Authentication auth) {
+    public String delete(@PathVariable Long id, Authentication auth) {
+
+        if (auth == null) {
+            throw new RuntimeException("Unauthorized");
+        }
 
         String email = auth.getName();
 
@@ -78,9 +96,8 @@ public class NoteController {
         Note note = noteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Note not found"));
 
-        // 🔐 SECURITY CHECK
         if (!note.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Unauthorized");
+            throw new RuntimeException("Unauthorized access to note");
         }
 
         noteRepository.delete(note);
