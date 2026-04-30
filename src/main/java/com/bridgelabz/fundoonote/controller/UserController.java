@@ -3,16 +3,15 @@ package com.bridgelabz.fundoonote.controller;
 import com.bridgelabz.fundoonote.dto.LoginDTO;
 import com.bridgelabz.fundoonote.dto.UserRegistrationDTO;
 import com.bridgelabz.fundoonote.service.UserService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public String register(@RequestBody UserRegistrationDTO dto) {
