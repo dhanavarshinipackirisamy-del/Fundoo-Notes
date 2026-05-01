@@ -2,13 +2,16 @@ package com.bridgelabz.fundoonote.service;
 
 import com.bridgelabz.fundoonote.dto.LoginDTO;
 import com.bridgelabz.fundoonote.dto.UserRegistrationDTO;
-import com.bridgelabz.fundoonote.entity.User;// ✅ IMPORTANT
+import com.bridgelabz.fundoonote.entity.User;
 import com.bridgelabz.fundoonote.repository.UserRepository;
-import com.bridgelabz.fundoonote.service.UserService;
-import com.bridgelabz.fundoonote.config.JwtUtil;
+import com.bridgelabz.fundoonote.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +20,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
+    // 🔹 REGISTER
     @Override
     public String register(UserRegistrationDTO dto) {
 
-        // 🔥 CHECK FIRST (ADD HERE)
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
 
-        // create user
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -34,6 +37,8 @@ public class UserServiceImpl implements UserService {
 
         return "User registered successfully";
     }
+
+    // 🔹 LOGIN
     @Override
     public String login(LoginDTO dto) {
 
